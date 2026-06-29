@@ -1,13 +1,13 @@
 import React from 'react';
 
-function GuessInput() {
+function GuessInput({ formSubmitValue}) {
     const [guessValue, setGuessValue] = React.useState('');
     return <form className="guess-input-wrapper" onSubmit={(event) => {
         event.preventDefault();
         const guess = guessValue.trim().toUpperCase();
         console.log(guess);
         setGuessValue('');
-        // Do something with `name` here
+        formSubmitValue(guess);
     }}>
         <label htmlFor="guess-input">Enter guess:</label>
         <input
