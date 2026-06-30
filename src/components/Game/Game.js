@@ -5,6 +5,7 @@ import {WORDS} from '../../data';
 import GuessInput from "../GuessInput";
 import GuessResults from "../GuessResults";
 import Guess from "../Guess";
+import {checkGuess} from "../../game-helpers";
 
 // Pick a random word on every pageload.
 const answer = sample(WORDS);
@@ -14,7 +15,8 @@ console.info({answer});
 function Game() {
     const [guesses, setGuesses] = React.useState([]);
     const handleGuessSubmit = (newGuess) => {
-        setGuesses([...guesses, { id: crypto.randomUUID(), value: newGuess }]);
+        const guessOutcome = checkGuess(newGuess, answer);
+        setGuesses([...guesses, { id: crypto.randomUUID(), value: newGuess, guessOutcome: guessOutcome }]);
     };
     return <>
         <Guess guesses={guesses}/>

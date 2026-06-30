@@ -1,21 +1,19 @@
 import React from 'react';
+import {NUM_OF_GUESSES_ALLOWED} from "../../constants";
 
 function Guess({guesses}) {
     const guessFixedArray = [];
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < NUM_OF_GUESSES_ALLOWED; i++) {
         if (guesses[i]) {
             guessFixedArray.push(guesses[i]);
         } else {
-            guessFixedArray.push({ id: crypto.randomUUID(), value: ''});
+            guessFixedArray.push({id: crypto.randomUUID(), value: '', guessOutcome: []});
         }
     }
     return <div className="guess-results">
         {guessFixedArray.map(guess => <p key={guess.id} className="guess">
-            <span className="cell">{guess.value[0]}</span>
-            <span className="cell">{guess.value[1]}</span>
-            <span className="cell">{guess.value[2]}</span>
-            <span className="cell">{guess.value[3]}</span>
-            <span className="cell">{guess.value[4]}</span></p>)}
+            {[0, 1, 2, 3, 4].map(i => <span key={i} className={'cell ' + (guess.guessOutcome[i]?.status ?? '')}>{guess.guessOutcome[i]?.letter}</span>)}
+        </p>)}
     </div>;
 }
 
