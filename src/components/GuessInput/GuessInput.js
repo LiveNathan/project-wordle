@@ -2,12 +2,17 @@ import React from 'react';
 
 function GuessInput({ formSubmitValue}) {
     const [guessValue, setGuessValue] = React.useState('');
+    const [errorMessage, setErrorMessage] = React.useState('');
     return <form className="guess-input-wrapper" onSubmit={(event) => {
         event.preventDefault();
         const guess = guessValue.trim().toUpperCase();
-        console.log(guess);
+        const error = formSubmitValue(guess);
+        if (error) {
+            setErrorMessage(error);
+            return;
+        }
+        setErrorMessage('');
         setGuessValue('');
-        formSubmitValue(guess);
     }}>
         <label htmlFor="guess-input">Enter guess:</label>
         <input
@@ -26,6 +31,7 @@ function GuessInput({ formSubmitValue}) {
                 setGuessValue(event.target.value);
             }}
         />
+        {errorMessage && <p className="guess-input-error">{errorMessage}</p>}
     </form>;
 }
 
