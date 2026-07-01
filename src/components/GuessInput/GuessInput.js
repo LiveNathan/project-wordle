@@ -1,6 +1,6 @@
 import React from 'react';
 
-function GuessInput({ formSubmitValue}) {
+function GuessInput({ formSubmitValue, gameState}) {
     const [guessValue, setGuessValue] = React.useState('');
     const [errorMessage, setErrorMessage] = React.useState('');
     return <form className="guess-input-wrapper" onSubmit={(event) => {
@@ -21,6 +21,7 @@ function GuessInput({ formSubmitValue}) {
             type="text"
             autoComplete="off"
             autoFocus
+            disabled={gameState !== 'in-progress'}
             maxLength="5"
             minLength="5"
             required
