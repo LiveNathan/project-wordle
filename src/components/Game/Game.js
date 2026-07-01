@@ -3,7 +3,6 @@ import React from 'react';
 import {sample} from '../../utils';
 import {WORDS} from '../../data';
 import GuessInput from "../GuessInput";
-import GuessResults from "../GuessResults";
 import Guess from "../Guess";
 import {checkGuess} from "../../game-helpers";
 import EndGameBannerSuccess from "../EndGameBannerSuccess";
@@ -26,12 +25,14 @@ function Game() {
             return "You already guessed that word."
         }
         const guessOutcome = checkGuess(newGuess, answer);
+        const newGuessCount = guesses.length + 1;
+        const isCorrect = newGuess === answer;
         setGuesses([...guesses, {id: crypto.randomUUID(), value: newGuess, guessOutcome: guessOutcome}]);
-        setGuessIsAnswer(newGuess === answer);
-        setGuessCount(guesses.length);
-        if (guessIsAnswer) {
+        setGuessIsAnswer(isCorrect);
+        setGuessCount(newGuessCount);
+        if (isCorrect) {
             setGameState('won');
-        } else if (guesses.length > NUM_OF_GUESSES_ALLOWED) {
+        } else if (newGuessCount >= NUM_OF_GUESSES_ALLOWED) {
             setGameState('lost');
         }
     };
